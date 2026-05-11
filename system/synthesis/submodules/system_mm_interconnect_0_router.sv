@@ -137,7 +137,7 @@ module system_mm_interconnect_0_router
     localparam PAD0 = log2ceil(64'h10000 - 64'h8000); 
     localparam PAD1 = log2ceil(64'h11000 - 64'h10800); 
     localparam PAD2 = log2ceil(64'h11020 - 64'h11000); 
-    localparam PAD3 = log2ceil(64'h11040 - 64'h11020); 
+    localparam PAD3 = log2ceil(64'h11030 - 64'h11020); 
     localparam PAD4 = log2ceil(64'h11050 - 64'h11048); 
     localparam PAD5 = log2ceil(64'h11054 - 64'h11050); 
     // -------------------------------------------------------
@@ -177,8 +177,6 @@ module system_mm_interconnect_0_router
     // -------------------------------------------------------
     // Write and read transaction signals
     // -------------------------------------------------------
-    wire write_transaction;
-    assign write_transaction = sink_data[PKT_TRANS_WRITE];
     wire read_transaction;
     assign read_transaction  = sink_data[PKT_TRANS_READ];
 
@@ -218,8 +216,8 @@ module system_mm_interconnect_0_router
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 5;
     end
 
-    // ( 0x11020 .. 0x11040 )
-    if ( {address[RG:PAD3],{PAD3{1'b0}}} == 17'h11020  && write_transaction  ) begin
+    // ( 0x11020 .. 0x11030 )
+    if ( {address[RG:PAD3],{PAD3{1'b0}}} == 17'h11020   ) begin
             src_channel = 6'b000100;
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 0;
     end

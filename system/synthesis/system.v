@@ -5,12 +5,12 @@
 `timescale 1 ps / 1 ps
 module system (
 		input  wire        clk_clk,                       //                    clk.clk
-		output wire [6:0]  hexs_0_conduit_end_export,     //     hexs_0_conduit_end.export
-		output wire [6:0]  hexs_1_conduit_end_export,     //     hexs_1_conduit_end.export
-		output wire [6:0]  hexs_2_conduit_end_export,     //     hexs_2_conduit_end.export
-		output wire [6:0]  hexs_3_conduit_end_export,     //     hexs_3_conduit_end.export
-		output wire [6:0]  hexs_4_conduit_end_export,     //     hexs_4_conduit_end.export
-		output wire [6:0]  hexs_5_conduit_end_export,     //     hexs_5_conduit_end.export
+		output wire [6:0]  hexs_0_conduit_end_readdata,   //     hexs_0_conduit_end.readdata
+		output wire [6:0]  hexs_1_conduit_end_readdata,   //     hexs_1_conduit_end.readdata
+		output wire [6:0]  hexs_2_conduit_end_readdata,   //     hexs_2_conduit_end.readdata
+		output wire [6:0]  hexs_3_conduit_end_readdata,   //     hexs_3_conduit_end.readdata
+		output wire [6:0]  hexs_4_conduit_end_readdata,   //     hexs_4_conduit_end.readdata
+		output wire [6:0]  hexs_5_conduit_end_readdata,   //     hexs_5_conduit_end.readdata
 		input  wire        reset_reset_n,                 //                  reset.reset_n
 		input  wire [31:0] switches_0_conduit_end_export  // switches_0_conduit_end.export
 	);
@@ -37,8 +37,10 @@ module system (
 	wire         mm_interconnect_0_switches_0_avalon_slave_0_chipselect;      // mm_interconnect_0:Switches_0_avalon_slave_0_chipselect -> Switches_0:iChip_select_n
 	wire  [31:0] mm_interconnect_0_switches_0_avalon_slave_0_readdata;        // Switches_0:oSwitches_reg -> mm_interconnect_0:Switches_0_avalon_slave_0_readdata
 	wire         mm_interconnect_0_switches_0_avalon_slave_0_read;            // mm_interconnect_0:Switches_0_avalon_slave_0_read -> Switches_0:iRead_n
-	wire         mm_interconnect_0_hexs_0_avalon_slave_0_chipselect;          // mm_interconnect_0:Hexs_0_avalon_slave_0_chipselect -> Hexs_0:iChipSelect_n
-	wire   [2:0] mm_interconnect_0_hexs_0_avalon_slave_0_address;             // mm_interconnect_0:Hexs_0_avalon_slave_0_address -> Hexs_0:iAddress
+	wire         mm_interconnect_0_hexs_0_avalon_slave_0_chipselect;          // mm_interconnect_0:Hexs_0_avalon_slave_0_chipselect -> Hexs_0:iChip_select_n
+	wire  [31:0] mm_interconnect_0_hexs_0_avalon_slave_0_readdata;            // Hexs_0:oReadData -> mm_interconnect_0:Hexs_0_avalon_slave_0_readdata
+	wire   [1:0] mm_interconnect_0_hexs_0_avalon_slave_0_address;             // mm_interconnect_0:Hexs_0_avalon_slave_0_address -> Hexs_0:iAddress
+	wire         mm_interconnect_0_hexs_0_avalon_slave_0_read;                // mm_interconnect_0:Hexs_0_avalon_slave_0_read -> Hexs_0:iRead_n
 	wire         mm_interconnect_0_hexs_0_avalon_slave_0_write;               // mm_interconnect_0:Hexs_0_avalon_slave_0_write -> Hexs_0:iWrite_n
 	wire  [31:0] mm_interconnect_0_hexs_0_avalon_slave_0_writedata;           // mm_interconnect_0:Hexs_0_avalon_slave_0_writedata -> Hexs_0:iData
 	wire  [31:0] mm_interconnect_0_nios2_gen2_0_debug_mem_slave_readdata;     // nios2_gen2_0:debug_mem_slave_readdata -> mm_interconnect_0:nios2_gen2_0_debug_mem_slave_readdata
@@ -70,18 +72,20 @@ module system (
 	wire         rst_controller_001_reset_out_reset;                          // rst_controller_001:reset_out -> [mm_interconnect_0:timer_0_reset_reset_bridge_in_reset_reset, timer_0:reset_n]
 
 	hexs hexs_0 (
-		.iWrite_n      (~mm_interconnect_0_hexs_0_avalon_slave_0_write),      // avalon_slave_0.write_n
-		.iAddress      (mm_interconnect_0_hexs_0_avalon_slave_0_address),     //               .address
-		.iData         (mm_interconnect_0_hexs_0_avalon_slave_0_writedata),   //               .writedata
-		.iChipSelect_n (~mm_interconnect_0_hexs_0_avalon_slave_0_chipselect), //               .chipselect_n
-		.iClk          (clk_clk),                                             //     clock_sink.clk
-		.iReset_n      (~rst_controller_reset_out_reset),                     //     reset_sink.reset_n
-		.oHex0         (hexs_0_conduit_end_export),                           //    conduit_end.export
-		.oHex1         (hexs_1_conduit_end_export),                           //  conduit_end_1.export
-		.oHex2         (hexs_2_conduit_end_export),                           //  conduit_end_2.export
-		.oHex3         (hexs_3_conduit_end_export),                           //  conduit_end_3.export
-		.oHex4         (hexs_4_conduit_end_export),                           //  conduit_end_4.export
-		.oHex5         (hexs_5_conduit_end_export)                            //  conduit_end_5.export
+		.iWrite_n       (~mm_interconnect_0_hexs_0_avalon_slave_0_write),      // avalon_slave_0.write_n
+		.iAddress       (mm_interconnect_0_hexs_0_avalon_slave_0_address),     //               .address
+		.iData          (mm_interconnect_0_hexs_0_avalon_slave_0_writedata),   //               .writedata
+		.iRead_n        (~mm_interconnect_0_hexs_0_avalon_slave_0_read),       //               .read_n
+		.oReadData      (mm_interconnect_0_hexs_0_avalon_slave_0_readdata),    //               .readdata
+		.iChip_select_n (~mm_interconnect_0_hexs_0_avalon_slave_0_chipselect), //               .chipselect_n
+		.iClk           (clk_clk),                                             //     clock_sink.clk
+		.iReset_n       (~rst_controller_reset_out_reset),                     //     reset_sink.reset_n
+		.oHEX0          (hexs_0_conduit_end_readdata),                         //    conduit_end.readdata
+		.oHEX1          (hexs_1_conduit_end_readdata),                         //  conduit_end_1.readdata
+		.oHEX2          (hexs_2_conduit_end_readdata),                         //  conduit_end_2.readdata
+		.oHEX3          (hexs_3_conduit_end_readdata),                         //  conduit_end_3.readdata
+		.oHEX4          (hexs_4_conduit_end_readdata),                         //  conduit_end_4.readdata
+		.oHEX5          (hexs_5_conduit_end_readdata)                          //  conduit_end_5.readdata
 	);
 
 	switches switches_0 (
@@ -178,6 +182,8 @@ module system (
 		.nios2_gen2_0_instruction_master_readdata       (nios2_gen2_0_instruction_master_readdata),                    //                                         .readdata
 		.Hexs_0_avalon_slave_0_address                  (mm_interconnect_0_hexs_0_avalon_slave_0_address),             //                    Hexs_0_avalon_slave_0.address
 		.Hexs_0_avalon_slave_0_write                    (mm_interconnect_0_hexs_0_avalon_slave_0_write),               //                                         .write
+		.Hexs_0_avalon_slave_0_read                     (mm_interconnect_0_hexs_0_avalon_slave_0_read),                //                                         .read
+		.Hexs_0_avalon_slave_0_readdata                 (mm_interconnect_0_hexs_0_avalon_slave_0_readdata),            //                                         .readdata
 		.Hexs_0_avalon_slave_0_writedata                (mm_interconnect_0_hexs_0_avalon_slave_0_writedata),           //                                         .writedata
 		.Hexs_0_avalon_slave_0_chipselect               (mm_interconnect_0_hexs_0_avalon_slave_0_chipselect),          //                                         .chipselect
 		.jtag_uart_0_avalon_jtag_slave_address          (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_address),     //            jtag_uart_0_avalon_jtag_slave.address

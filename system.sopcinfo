@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="system" kind="system" version="1.0" fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2026.04.17.14:39:20 -->
+ <!-- 2026.05.10.15:05:16 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1776411560</value>
+  <value>1778400316</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -152,7 +152,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="addressSpan">
     <type>java.math.BigInteger</type>
-    <value>32</value>
+    <value>16</value>
     <derived>true</derived>
     <enabled>true</enabled>
     <visible>false</visible>
@@ -457,7 +457,7 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>iAddress</name>
     <direction>Input</direction>
-    <width>3</width>
+    <width>2</width>
     <role>address</role>
    </port>
    <port>
@@ -467,7 +467,19 @@ parameters are a RESULT of the module parameters. -->
     <role>writedata</role>
    </port>
    <port>
-    <name>iChipSelect_n</name>
+    <name>iRead_n</name>
+    <direction>Input</direction>
+    <width>1</width>
+    <role>read_n</role>
+   </port>
+   <port>
+    <name>oReadData</name>
+    <direction>Output</direction>
+    <width>32</width>
+    <role>readdata</role>
+   </port>
+   <port>
+    <name>iChip_select_n</name>
     <direction>Input</direction>
     <width>1</width>
     <role>chipselect_n</role>
@@ -602,10 +614,10 @@ parameters are a RESULT of the module parameters. -->
    <type>conduit</type>
    <isStart>false</isStart>
    <port>
-    <name>oHex0</name>
+    <name>oHEX0</name>
     <direction>Output</direction>
     <width>7</width>
-    <role>export</role>
+    <role>readdata</role>
    </port>
   </interface>
   <interface name="conduit_end_1" kind="conduit_end" version="18.1">
@@ -647,10 +659,10 @@ parameters are a RESULT of the module parameters. -->
    <type>conduit</type>
    <isStart>false</isStart>
    <port>
-    <name>oHex1</name>
+    <name>oHEX1</name>
     <direction>Output</direction>
     <width>7</width>
-    <role>export</role>
+    <role>readdata</role>
    </port>
   </interface>
   <interface name="conduit_end_2" kind="conduit_end" version="18.1">
@@ -692,10 +704,10 @@ parameters are a RESULT of the module parameters. -->
    <type>conduit</type>
    <isStart>false</isStart>
    <port>
-    <name>oHex2</name>
+    <name>oHEX2</name>
     <direction>Output</direction>
     <width>7</width>
-    <role>export</role>
+    <role>readdata</role>
    </port>
   </interface>
   <interface name="conduit_end_3" kind="conduit_end" version="18.1">
@@ -737,10 +749,10 @@ parameters are a RESULT of the module parameters. -->
    <type>conduit</type>
    <isStart>false</isStart>
    <port>
-    <name>oHex3</name>
+    <name>oHEX3</name>
     <direction>Output</direction>
     <width>7</width>
-    <role>export</role>
+    <role>readdata</role>
    </port>
   </interface>
   <interface name="conduit_end_4" kind="conduit_end" version="18.1">
@@ -782,10 +794,10 @@ parameters are a RESULT of the module parameters. -->
    <type>conduit</type>
    <isStart>false</isStart>
    <port>
-    <name>oHex4</name>
+    <name>oHEX4</name>
     <direction>Output</direction>
     <width>7</width>
-    <role>export</role>
+    <role>readdata</role>
    </port>
   </interface>
   <interface name="conduit_end_5" kind="conduit_end" version="18.1">
@@ -827,10 +839,10 @@ parameters are a RESULT of the module parameters. -->
    <type>conduit</type>
    <isStart>false</isStart>
    <port>
-    <name>oHex5</name>
+    <name>oHEX5</name>
     <direction>Output</direction>
     <width>7</width>
-    <role>export</role>
+    <role>readdata</role>
    </port>
   </interface>
  </module>
@@ -4038,7 +4050,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="dataSlaveMapParam">
    <type>java.lang.String</type>
-   <value><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x8000' end='0x10000' type='altera_avalon_onchip_memory2.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x10800' end='0x11000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='timer_0.s1' start='0x11000' end='0x11020' type='altera_avalon_timer.s1' /><slave name='Hexs_0.avalon_slave_0' start='0x11020' end='0x11040' type='Hexs.avalon_slave_0' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x11048' end='0x11050' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='Switches_0.avalon_slave_0' start='0x11050' end='0x11054' type='Switches.avalon_slave_0' /></address-map>]]></value>
+   <value><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x8000' end='0x10000' type='altera_avalon_onchip_memory2.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x10800' end='0x11000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='timer_0.s1' start='0x11000' end='0x11020' type='altera_avalon_timer.s1' /><slave name='Hexs_0.avalon_slave_0' start='0x11020' end='0x11030' type='Hexs.avalon_slave_0' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x11048' end='0x11050' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='Switches_0.avalon_slave_0' start='0x11050' end='0x11054' type='Switches.avalon_slave_0' /></address-map>]]></value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -4726,7 +4738,7 @@ parameters are a RESULT of the module parameters. -->
     <slaveName>avalon_slave_0</slaveName>
     <name>Hexs_0.avalon_slave_0</name>
     <baseAddress>69664</baseAddress>
-    <span>32</span>
+    <span>16</span>
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>

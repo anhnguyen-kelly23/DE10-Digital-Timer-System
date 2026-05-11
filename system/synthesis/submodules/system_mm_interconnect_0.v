@@ -22,8 +22,10 @@ module system_mm_interconnect_0 (
 		output wire        nios2_gen2_0_instruction_master_waitrequest,    //                                         .waitrequest
 		input  wire        nios2_gen2_0_instruction_master_read,           //                                         .read
 		output wire [31:0] nios2_gen2_0_instruction_master_readdata,       //                                         .readdata
-		output wire [2:0]  Hexs_0_avalon_slave_0_address,                  //                    Hexs_0_avalon_slave_0.address
+		output wire [1:0]  Hexs_0_avalon_slave_0_address,                  //                    Hexs_0_avalon_slave_0.address
 		output wire        Hexs_0_avalon_slave_0_write,                    //                                         .write
+		output wire        Hexs_0_avalon_slave_0_read,                     //                                         .read
+		input  wire [31:0] Hexs_0_avalon_slave_0_readdata,                 //                                         .readdata
 		output wire [31:0] Hexs_0_avalon_slave_0_writedata,                //                                         .writedata
 		output wire        Hexs_0_avalon_slave_0_chipselect,               //                                         .chipselect
 		output wire [0:0]  jtag_uart_0_avalon_jtag_slave_address,          //            jtag_uart_0_avalon_jtag_slave.address
@@ -742,7 +744,7 @@ module system_mm_interconnect_0 (
 	);
 
 	altera_merlin_slave_translator #(
-		.AV_ADDRESS_W                   (3),
+		.AV_ADDRESS_W                   (2),
 		.AV_DATA_W                      (32),
 		.UAV_DATA_W                     (32),
 		.AV_BURSTCOUNT_W                (1),
@@ -783,10 +785,10 @@ module system_mm_interconnect_0 (
 		.uav_debugaccess        (hexs_0_avalon_slave_0_agent_m0_debugaccess),     //                         .debugaccess
 		.av_address             (Hexs_0_avalon_slave_0_address),                  //      avalon_anti_slave_0.address
 		.av_write               (Hexs_0_avalon_slave_0_write),                    //                         .write
+		.av_read                (Hexs_0_avalon_slave_0_read),                     //                         .read
+		.av_readdata            (Hexs_0_avalon_slave_0_readdata),                 //                         .readdata
 		.av_writedata           (Hexs_0_avalon_slave_0_writedata),                //                         .writedata
 		.av_chipselect          (Hexs_0_avalon_slave_0_chipselect),               //                         .chipselect
-		.av_read                (),                                               //              (terminated)
-		.av_readdata            (32'b11011110101011011101111010101101),           //              (terminated)
 		.av_begintransfer       (),                                               //              (terminated)
 		.av_beginbursttransfer  (),                                               //              (terminated)
 		.av_burstcount          (),                                               //              (terminated)

@@ -1,5 +1,5 @@
 Flow report for Bai4
-Fri Apr 17 15:03:38 2026
+Sun May 10 15:09:32 2026
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,15 +40,15 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Fri Apr 17 15:03:29 2026       ;
+; Flow Status                     ; Successful - Sun May 10 15:09:23 2026       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; Bai4                                        ;
 ; Top-level Entity Name           ; Bai4                                        ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSXFC6D6F31C6                              ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 861 / 41,910 ( 2 % )                        ;
-; Total registers                 ; 1147                                        ;
+; Logic utilization (in ALMs)     ; 857 / 41,910 ( 2 % )                        ;
+; Total registers                 ; 1193                                        ;
 ; Total pins                      ; 60 / 499 ( 12 % )                           ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 273,408 / 5,662,720 ( 5 % )                 ;
@@ -67,7 +67,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/17/2026 14:59:35 ;
+; Start date & time ; 05/10/2026 15:05:54 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; Bai4                ;
 +-------------------+---------------------+
@@ -78,7 +78,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------+----------------------------------------------------------+---------------+----------------------+------------+
 ; Assignment Name                     ; Value                                                    ; Default Value ; Entity Name          ; Section Id ;
 +-------------------------------------+----------------------------------------------------------+---------------+----------------------+------------+
-; COMPILER_SIGNATURE_ID               ; 176156956512172.177641277426836                          ; --            ; --                   ; --         ;
+; COMPILER_SIGNATURE_ID               ; 50832824053265.177840035415468                           ; --            ; --                   ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                                       ; --            ; --                   ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                                        ; --            ; --                   ; --         ;
 ; MISC_FILE                           ; system/synthesis/../system.cmp                           ; --            ; --                   ; --         ;
@@ -97,7 +97,7 @@ refer to the applicable agreement for further details.
 ; PROJECT_OUTPUT_DIRECTORY            ; output_files                                             ; --            ; --                   ; --         ;
 ; SLD_FILE                            ; system/synthesis/system.regmap                           ; --            ; --                   ; --         ;
 ; SLD_FILE                            ; system/synthesis/system.debuginfo                        ; --            ; --                   ; --         ;
-; SLD_INFO                            ; QSYS_NAME system HAS_SOPCINFO 1 GENERATION_ID 1776411560 ; --            ; system               ; --         ;
+; SLD_INFO                            ; QSYS_NAME system HAS_SOPCINFO 1 GENERATION_ID 1778400316 ; --            ; system               ; --         ;
 ; SOPCINFO_FILE                       ; system/synthesis/../../system.sopcinfo                   ; --            ; --                   ; --         ;
 ; SYNTHESIS_ONLY_QIP                  ; On                                                       ; --            ; --                   ; --         ;
 +-------------------------------------+----------------------------------------------------------+---------------+----------------------+------------+
@@ -108,11 +108,11 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:29     ; 1.0                     ; 5053 MB             ; 00:00:51                           ;
-; Fitter               ; 00:03:12     ; 1.1                     ; 7862 MB             ; 00:18:47                           ;
-; Assembler            ; 00:00:08     ; 1.0                     ; 4877 MB             ; 00:00:08                           ;
-; Timing Analyzer      ; 00:00:08     ; 2.8                     ; 5370 MB             ; 00:00:17                           ;
-; Total                ; 00:03:57     ; --                      ; --                  ; 00:20:03                           ;
+; Analysis & Synthesis ; 00:00:30     ; 1.0                     ; 5042 MB             ; 00:00:50                           ;
+; Fitter               ; 00:02:43     ; 1.1                     ; 7925 MB             ; 00:17:36                           ;
+; Assembler            ; 00:00:10     ; 1.0                     ; 4882 MB             ; 00:00:08                           ;
+; Timing Analyzer      ; 00:00:08     ; 2.8                     ; 5366 MB             ; 00:00:17                           ;
+; Total                ; 00:03:31     ; --                      ; --                  ; 00:18:51                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

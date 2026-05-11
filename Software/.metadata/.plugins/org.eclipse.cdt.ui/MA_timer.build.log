@@ -1,22 +1,9 @@
-14:46:55 **** Incremental Build of configuration Nios II for project MA_timer ****
+16:31:33 **** Incremental Build of configuration Nios II for project MA_timer ****
 make all 
 Info: Building ../MA_timer_bsp/
 C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../MA_timer_bsp/
 [BSP build complete]
-Info: Compiling hello_world.c to obj/default/hello_world.o
-nios2-elf-gcc -xc -MP -MMD -c -I../MA_timer_bsp//HAL/inc -I../MA_timer_bsp/ -I../MA_timer_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/hello_world.o hello_world.c
-hello_world.c: In function 'main':
-hello_world.c:66:12: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
-     SW_ptr = SWITCHES_0_BASE;
-            ^
-Info: Linking MA_timer.elf
-nios2-elf-g++  -T'../MA_timer_bsp//linker.x' -msys-crt0='../MA_timer_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../MA_timer_bsp/  -msmallc  -Wl,-Map=MA_timer.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o MA_timer.elf obj/default/hello_world.o -lm -msys-lib=m
-nios2-elf-insert MA_timer.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name system --quartus_project_dir "E:/Hethongnhung_thayDang/Phan_thayThuan/Bai4_Timer" --jdi ../..//output_files/Bai4.jdi --sopcinfo E:/Hethongnhung_thayDang/Phan_thayThuan/Bai4_Timer/Software/MA_timer_bsp/../../system.sopcinfo
-Info: (MA_timer.elf) 9032 Bytes program size (code + initialized data).
-Info:                22 KBytes free for stack + heap.
-Info: Creating MA_timer.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source MA_timer.elf >MA_timer.objdump
 [MA_timer build complete]
 
-14:46:56 Build Finished (took 1s.204ms)
+16:31:33 Build Finished (took 543ms)
 
