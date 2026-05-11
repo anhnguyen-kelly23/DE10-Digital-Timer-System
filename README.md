@@ -26,15 +26,15 @@ Hệ thống sử dụng các switch trên kit để điều chỉnh thời gian
 
 | Switch | Chức năng | Mô tả |
 | :--- | :--- | :--- |
-| **SW9 - SW8** | **Chế độ (Mode)** | - `00`: Bắt đầu đếm (Chạy tự động).<br>- `01`: Dừng lại và chỉnh **Giây**.<br>- `11`: Dừng lại và chỉnh **Phút**.<br>- `10`: Dừng lại và chỉnh **Giờ**. |
-| **SW6 - SW4** | **Chỉnh hàng chục** | Giá trị từ 0 đến 5 (hoặc 2 cho hàng chục của Giờ). |
-| **SW3 - SW0** | **Chỉnh hàng đơn vị** | Giá trị từ 0 đến 9. |
+| **SW9 - SW8** | **Chế độ (Mode)** | - `00`: Bắt đầu đếm (Chạy tự động).<br>- `01`: Dừng lại và chỉnh **Giây**.<br>- `10`: Dừng lại và chỉnh **Phút**.<br>- `11`: Dừng lại và chỉnh **Giờ**. |
+| **SW7 - SW4** | **Chỉnh hàng chục (BCD)** | Giá trị từ 0 đến 5 (nếu > 5 sẽ tự giới hạn ở 5). Riêng Giờ sẽ giới hạn ở 2. |
+| **SW3 - SW0** | **Chỉnh hàng đơn vị (BCD)** | Giá trị từ 0 đến 9 (nếu > 9 sẽ tự giới hạn ở 9). |
 
 ### Ví dụ cách chỉnh:
 Để chỉnh đồng hồ thành **12:30:00**:
-1. Gạt **SW9-SW8** thành `10` (Dừng và chỉnh Giờ). Gạt các switch giá trị (`SW6-SW0`) sao cho hiện số 12.
-2. Gạt **SW9-SW8** thành `11` (Dừng và chỉnh Phút). Gạt các switch giá trị (`SW6-SW0`) sao cho hiện số 30.
-3. Gạt **SW9-SW8** thành `01` (Dừng và chỉnh Giây). Gạt các switch giá trị (`SW6-SW0`) về 00.
+1. Gạt **SW9-SW8** thành `11` (Dừng và chỉnh Giờ). Gạt các switch giá trị (`SW7-SW0`) sao cho hiện số 12 (hàng chục `0001`, hàng đơn vị `0010`).
+2. Gạt **SW9-SW8** thành `10` (Dừng và chỉnh Phút). Gạt các switch giá trị (`SW7-SW0`) sao cho hiện số 30 (hàng chục `0011`, hàng đơn vị `0000`).
+3. Gạt **SW9-SW8** thành `01` (Dừng và chỉnh Giây). Gạt các switch giá trị (`SW7-SW0`) về 00.
 4. Gạt **SW9-SW8** về `00` để đồng hồ bắt đầu chạy tiếp từ thời gian vừa chỉnh.
 
 ---
