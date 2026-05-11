@@ -1,0 +1,115 @@
+/*
+ * "Hello World" example.
+ *
+ * This example prints 'Hello from Nios II' to the STDOUT stream. It runs on
+ * the Nios II 'standard', 'full_featured', 'fast', and 'low_cost' example
+ * designs. It runs with or without the MicroC/OS-II RTOS and requires a STDOUT
+ * device in your system's hardware.
+ * The memory footprint of this hosted application is ~69 kbytes by default
+ * using the standard reference design.
+ *
+ * For a reduced footprint version of this template, and an explanation of how
+ * to reduce the memory footprint for a given application, see the
+ * "small_hello_world" template.
+ *
+ */
+
+#include <stdio.h>
+#include "io.h"
+#include "system.h"
+#include "altera_avalon_timer_regs.h"
+#include "sys/alt_irq.h"
+
+volatile unsigned int counter = 0;
+volatile unsigned int phut = 0;
+volatile unsigned int gio = 0;
+
+volatile int pause = 0;
+
+volatile int *SW_ptr;
+
+void timer_Init() {
+    unsigned int period = 50000000 - 1;
+
+    IOWR_ALTERA_AVALON_TIMER_CONTROL(TIMER_0_BASE,
+    ALTERA_AVALON_TIMER_CONTROL_STOP_MSK);
+
+    IOWR_ALTERA_AVALON_TIMER_PERIODL(TIMER_0_BASE, period);
+    IOWR_ALTERA_AVALON_TIMER_PERIODH(TIMER_0_BASE, (period >> 16));
+
+    IOWR_ALTERA_AVALON_TIMER_CONTROL(TIMER_0_BASE,
+        ALTERA_AVALON_TIMER_CONTROL_CONT_MSK |
+        ALTERA_AVALON_TIMER_CONTROL_ITO_MSK  |
+        ALTERA_AVALON_TIMER_CONTROL_START_MSK);
+}
+
+void Timer_IRQ_Handler(void* isr_context) {
+
+
+    if (!pause) {
+        counter++;
+
+        if (counter == 60) {
+            counter = 0;
+            phut++;
+        }
+        if (phut == 60) {
+            phut = 0;
+            gio++;
+        }
+        if (gio == 24) {
+            gio = 0;
+        }
+    }
+
+
+    IOWR(HEXS_0_BASE, 0, counter % 10);   // HEX0
+    IOWR(HEXS_0_BASE, 1, counter / 10);   // HEX1
+
+    IOWR(HEXS_0_BASE, 2, phut % 10);      // HEX2
+    IOWR(HEXS_0_BASE, 3, phut / 10);      // HEX3
+
+    IOWR(HEXS_0_BASE, 4, gio % 10);       // HEX4
+    IOWR(HEXS_0_BASE, 5, gio / 10);       // HEX5
+
+    // clear interrupt
+    IOWR_ALTERA_AVALON_TIMER_STATUS(TIMER_0_BASE,
+        ALTERA_AVALON_TIMER_STATUS_TO_MSK);
+}
+
+int main() {
+
+    SW_ptr = SWITCHES_0_BASE;
+
+    timer_Init();
+
+    alt_ic_isr_register(0, TIMER_0_IRQ,
+        Timer_IRQ_Handler, (void*)0, (void*)0);
+
+    while (1) {
+
+        unsigned int temp = *SW_ptr & 0x3FF;
+
+        // SW9 = pause
+        pause = (temp >> 9) & 0x1;
+
+        unsigned int mode = (temp >> 7) & 0x3; // SW8-7
+        unsigned int chuc = (temp >> 4) & 0x7;
+        unsigned int dv   = temp & 0xF;
+
+        unsigned int data = chuc * 10 + dv;
+
+
+        if (pause) {
+            if (mode == 0) {
+                counter = (data > 59) ? 59 : data;
+            }
+            else if (mode == 1) {
+                phut = (data > 59) ? 59 : data;
+            }
+            else if (mode == 2) {
+                gio = (data > 23) ? 23 : data;
+            }
+        }
+    }
+}

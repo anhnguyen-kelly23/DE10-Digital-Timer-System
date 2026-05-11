@@ -1,12 +1,12 @@
-Fitter Status : Successful - Fri Apr 17 15:03:19 2026
+Fitter Status : Successful - Sun May 10 15:09:10 2026
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : Bai4
 Top-level Entity Name : Bai4
 Family : Cyclone V
 Device : 5CSXFC6D6F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 861 / 41,910 ( 2 % )
-Total registers : 1147
+Logic utilization (in ALMs) : 857 / 41,910 ( 2 % )
+Total registers : 1193
 Total pins : 60 / 499 ( 12 % )
 Total virtual pins : 0
 Total block memory bits : 273,408 / 5,662,720 ( 5 % )

@@ -1,0 +1,143 @@
+/*
+ * digital_clock.c
+ *
+ * Digital Clock on Nios II (DE-series board)
+ * Uses: TIMER_0, HEXMODULE_0, SWITCH_0
+ *
+ * Switch mapping:
+ *   SW[9:8] -> Mode configuration
+ *              00 = Running mode 
+ *              01 = Pause & Set Second 
+ *              10 = Pause & Set Minute 
+ *              11 = Pause & Set Hour 
+ *   SW[7:4] -> Tens digit (BCD format)
+ *   SW[3:0] -> Ones digit (BCD format)
+ */
+
+#include <stdio.h>
+#include "io.h"
+#include "system.h"
+#include "altera_avalon_timer_regs.h"
+#include "sys/alt_irq.h"
+
+/* Global Time Variables (BCD format) */
+volatile unsigned int rtc_sec  = 0x00;
+volatile unsigned int rtc_min  = 0x00;
+volatile unsigned int rtc_hour = 0x00;
+
+/* Update the HEX displays */
+void refresh_display(void)
+{
+    /* Use IOWR_16DIRECT macro of Nios II HAL instead of raw pointer */
+    IOWR_16DIRECT(HEXMODULE_0_BASE, 0, rtc_sec);
+    IOWR_16DIRECT(HEXMODULE_0_BASE, 4, rtc_min);
+    IOWR_16DIRECT(HEXMODULE_0_BASE, 8, rtc_hour);
+}
+
+/* Initialize Timer 0 for 1-second interrupts */
+void configure_timer(void)
+{
+    unsigned int timer_period = 50000000 - 1; /* 1 sec at 50MHz */
+
+    IOWR_ALTERA_AVALON_TIMER_CONTROL(TIMER_0_BASE, ALTERA_AVALON_TIMER_CONTROL_STOP_MSK);
+    IOWR_ALTERA_AVALON_TIMER_PERIODL(TIMER_0_BASE, (timer_period & 0xFFFF));
+    IOWR_ALTERA_AVALON_TIMER_PERIODH(TIMER_0_BASE, (timer_period >> 16));
+    
+    IOWR_ALTERA_AVALON_TIMER_CONTROL(TIMER_0_BASE, 
+        ALTERA_AVALON_TIMER_CONTROL_CONT_MSK | 
+        ALTERA_AVALON_TIMER_CONTROL_ITO_MSK | 
+        ALTERA_AVALON_TIMER_CONTROL_START_MSK);
+}
+
+/* Setup time via switches */
+void manual_time_setup(void)
+{
+    unsigned int sw_val = IORD_32DIRECT(SWITCH_0_BASE, 0);
+    unsigned int mode   = (sw_val >> 8) & 0x03;
+    unsigned int tens   = (sw_val >> 4) & 0x0F;
+    unsigned int ones   = sw_val & 0x0F;
+
+    /* Only allow setting when not running (mode != 00) */
+    if (mode != 0x00)
+    {
+        if (mode == 0x01) /* Mode 01: Set Seconds */
+        {
+            if (ones > 9) ones = 9;
+            if (tens > 5) tens = 5;
+            rtc_sec = (tens << 4) | ones;
+        }
+        else if (mode == 0x02) /* Mode 10: Set Minutes */
+        {
+            if (ones > 9) ones = 9;
+            if (tens > 5) tens = 5;
+            rtc_min = (tens << 4) | ones;
+        }
+        else if (mode == 0x03) /* Mode 11: Set Hours */
+        {
+            if (tens > 2) tens = 2;
+            if (tens == 2 && ones > 3) ones = 3;
+            else if (ones > 9) ones = 9;
+            
+            rtc_hour = (tens << 4) | ones;
+        }
+        
+        refresh_display();
+    }
+}
+
+/* Timer Interrupt Service Routine */
+void timer_isr_routine(void* context)
+{
+    unsigned int sw_val = IORD_32DIRECT(SWITCH_0_BASE, 0);
+    unsigned int mode   = (sw_val >> 8) & 0x03;
+
+    /* Only increment clock in running mode (mode == 00) */
+    if (mode == 0x00)
+    {
+        rtc_sec++;
+        if ((rtc_sec & 0x0F) >= 10) rtc_sec += 6; /* BCD fixup */
+
+        if (rtc_sec >= 0x60)
+        {
+            rtc_sec = 0x00;
+            rtc_min++;
+            if ((rtc_min & 0x0F) >= 10) rtc_min += 6;
+
+            if (rtc_min >= 0x60)
+            {
+                rtc_min = 0x00;
+                rtc_hour++;
+                if ((rtc_hour & 0x0F) >= 10) rtc_hour += 6;
+
+                if (rtc_hour >= 0x24)
+                {
+                    rtc_hour = 0x00;
+                }
+            }
+        }
+        refresh_display();
+    }
+
+    /* Clear interrupt status flag */
+    IOWR_ALTERA_AVALON_TIMER_STATUS(TIMER_0_BASE, 0);
+}
+
+int main(void)
+{
+    /* Initial display on power up */
+    refresh_display();
+
+    /* Start the timer hardware */
+    configure_timer();
+
+    /* Register Interrupt Service Routine */
+    alt_ic_isr_register(0, TIMER_0_IRQ, timer_isr_routine, (void*)0, (void*)0);
+
+    /* Main background loop */
+    while (1)
+    {
+        manual_time_setup();
+    }
+
+    return 0;
+}

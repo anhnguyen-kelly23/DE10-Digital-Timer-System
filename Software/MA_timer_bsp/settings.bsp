@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Apr 17, 2026 2:46:25 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1776411985694</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>May 8, 2026 4:30:14 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1778232614243</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>E:\Hethongnhung_thayDang\Phan_thayThuan\Bai4_Timer\software\MA_timer_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\system.sopcinfo</SopcDesignFile>
